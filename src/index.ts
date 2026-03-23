@@ -12,7 +12,6 @@ const PORT = Number(process.env.PORT) || 3000;
 app.use(cors());
 app.use(express.json());
 
-/* --- заглушки: только GET отдают пустые данные; POST/DELETE — 501 --- */
 app.get('/api/products', (_req, res) => {
   res.json([]);
 });
