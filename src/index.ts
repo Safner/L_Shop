@@ -1,8 +1,4 @@
-/**
- * Участник A: каркас сервера + заглушки API.
- * Участник B подключит routes/products и реальные данные.
- * Участник C подключит routes/cart и логику корзины.
- */
+
 import cors from 'cors';
 import express from 'express';
 import path from 'path';
