@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Магазин</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner header-row">
+        <div class="brand-block">
+          <span class="brand-icon" aria-hidden="true">◇</span>
+          <div>
+            <div class="brand">Магазин</div>
+            <p class="tagline">Выберите товары и оформите корзину — всё на одной странице</p>
+          </div>
+        </div>
+        <div class="auth-panel" id="auth-panel" aria-label="Вход и регистрация">
+          <p class="auth-caption">Вход</p>
+          <div id="auth-guest" class="auth-guest">
+            <label class="auth-field">
+              <span class="sr-only">Логин</span>
+              <input id="auth-username" type="text" placeholder="Логин" autocomplete="username" />
+            </label>
+            <label class="auth-field">
+              <span class="sr-only">Пароль</span>
+              <input
+                id="auth-password"
+                type="password"
+                placeholder="Пароль"
+                autocomplete="current-password"
+              />
+            </label>
+            <button type="button" id="btn-login" class="btn btn-auth">Войти</button>
+            <button type="button" id="btn-register" class="btn btn-auth-secondary">Регистрация</button>
+          </div>
+          <div id="auth-user" class="auth-user hidden">
+            <span class="auth-user-name" id="auth-user-label"></span>
+            <button type="button" id="btn-logout" class="btn btn-auth-ghost">Выйти</button>
+          </div>
+          <p id="auth-err" class="auth-err" role="alert"></p>
+          <p class="auth-footer-link">
+            <a href="/register">Отдельная страница входа</a>
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="shop-wrap">
+      <div class="catalog-col">
+        <section class="panel add-panel">
+          <h2 class="panel-title">Добавить товар</h2>
+          <p id="guest-hint" class="guest-hint hidden">
+            Войдите в аккаунт, чтобы добавлять товары, менять корзину и удалять позиции из каталога.
+          </p>
+          <div id="err-products" class="error" role="alert"></div>
+          <div class="add-form">
+            <label class="field">
+              <span>Название</span>
+              <input
+                id="name-products"
+                type="text"
+                placeholder="Например, Сок"
+                autocomplete="off"
+              />
+            </label>
+            <label class="field">
+              <span>Цена, Br (BYN)</span>
+              <input id="price-products" type="number" min="0" step="1" placeholder="120" />
+            </label>
+            <button type="button" id="add-products" class="btn btn-secondary">В каталог</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Каталог</h2>
+          <div id="product-grid" class="product-grid"></div>
+          <p id="empty-catalog" class="hint hidden">Пока нет товаров — добавьте первый выше.</p>
+        </section>
+      </div>
+
+      <aside class="cart-panel panel" aria-label="Корзина">
+        <div class="cart-head">
+          <h2 class="panel-title">Корзина</h2>
+          <span class="cart-badge" id="cart-count">0</span>
+        </div>
+        <div id="err-cart" class="error" role="alert"></div>
+        <ul id="cart-lines" class="cart-lines"></ul>
+        <div id="cart-empty" class="cart-empty">Корзина пуста — добавьте товары из каталога</div>
+        <div class="cart-footer hidden" id="cart-footer">
+          <div class="cart-total-row">
+            <span>Итого</span>
+            <strong><span id="total-cart">0</span> Br</strong>
+          </div>
+          <button type="button" id="clear-cart" class="btn btn-ghost">Очистить корзину</button>
+        </div>
+      </aside>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

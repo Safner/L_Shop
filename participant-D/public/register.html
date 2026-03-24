@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Вход и регистрация — Магазин</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="auth-page-body">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand-block">
+          <span class="brand-icon" aria-hidden="true">◇</span>
+          <div>
+            <div class="brand">Магазин</div>
+            <p class="tagline">Создайте аккаунт или войдите, чтобы управлять товарами и корзиной</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="auth-page-main">
+      <div class="panel auth-card">
+        <h1 class="panel-title">Регистрация и вход</h1>
+        <p class="auth-page-lead">После успешного входа вы попадёте в каталог.</p>
+        <div id="auth-err" class="error auth-page-err" role="alert"></div>
+        <div class="auth-page-fields">
+          <label class="field">
+            <span>Логин</span>
+            <input
+              id="auth-username"
+              type="text"
+              placeholder="Не короче 2 символов"
+              autocomplete="username"
+            />
+          </label>
+          <label class="field">
+            <span>Пароль</span>
+            <input
+              id="auth-password"
+              type="password"
+              placeholder="Не короче 4 символов"
+              autocomplete="new-password"
+            />
+          </label>
+        </div>
+        <div class="auth-page-actions">
+          <button type="button" id="btn-register" class="btn btn-primary">Зарегистрироваться</button>
+          <button type="button" id="btn-login" class="btn btn-secondary">Войти</button>
+        </div>
+        <p class="auth-page-shop-link">
+          <a href="/shop">Перейти в магазин без входа</a> — каталог можно смотреть без аккаунта.
+        </p>
+      </div>
+    </main>
+
+    <script src="/register.js"></script>
+  </body>
+</html>
