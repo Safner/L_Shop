@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Оформление доставки</title>
+</head>
+<body>
+  <h1>Оформление доставки</h1>
+
+  <form id="delivery-form" data-delivery="form">
+    <h3>Контактные данные</h3>
+    <input name="name" placeholder="Имя" required />
+    <input name="phone" placeholder="Телефон" required />
+    <input name="email" placeholder="Email" required />
+
+    <h3>Адрес доставки</h3>
+    <input name="country" placeholder="Страна" required />
+    <input name="city" placeholder="Город" required />
+    <input name="street" placeholder="Улица" required />
+    <input name="house" placeholder="Дом" required />
+    <input name="apartment" placeholder="Квартира" />
+
+    <h3>Оплата</h3>
+    <label><input type="radio" name="payment" value="card" checked /> Картой</label>
+    <label><input type="radio" name="payment" value="cash" /> Наличными</label>
+    <label><input type="radio" name="payment" value="online" /> Онлайн</label>
+
+    <button type="submit">Подтвердить доставку</button>
+  </form>
+
+  <script src="/delivery.js"></script>
+</body>
+</html>

@@ -1,9 +1,28 @@
 /**
+<<<<<<< HEAD
  * Участник A: загрузка каталога и корзины с сервера (GET работают).
  * Кнопки добавления/удаления покажут сообщение, пока B и C не подключат API.
  */
 const apiProducts = '/api/products';
 const apiCart = '/api/cart';
+=======
+ * Каталог и корзина. Добавление товаров, корзина и удаление — только после входа.
+ */
+const apiProducts = '/api/products';
+const apiCart = '/api/cart';
+const TOKEN_KEY = 'shop_token';
+
+function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+function authHeaders() {
+  const t = getToken();
+  const h = { 'Content-Type': 'application/json' };
+  if (t) h.Authorization = 'Bearer ' + t;
+  return h;
+}
+>>>>>>> 240dd9b (another some changes)
 
 function escapeHtml(s) {
   const d = document.createElement('div');
@@ -20,6 +39,48 @@ async function readError(r) {
   }
 }
 
+<<<<<<< HEAD
+=======
+function setGuestMode(isGuest) {
+  document.body.classList.toggle('body--guest', isGuest);
+  const hint = document.getElementById('guest-hint');
+  if (hint) hint.classList.toggle('hidden', !isGuest);
+}
+
+function setAuthUI(user) {
+  const guest = document.getElementById('auth-guest');
+  const userEl = document.getElementById('auth-user');
+  const label = document.getElementById('auth-user-label');
+  document.getElementById('auth-err').textContent = '';
+  if (user) {
+    guest.classList.add('hidden');
+    userEl.classList.remove('hidden');
+    label.textContent = user.username;
+    setGuestMode(false);
+  } else {
+    guest.classList.remove('hidden');
+    userEl.classList.add('hidden');
+    setGuestMode(true);
+  }
+}
+
+async function refreshAuth() {
+  const token = getToken();
+  if (!token) {
+    setAuthUI(null);
+    return;
+  }
+  const r = await fetch('/api/auth/me', { headers: { Authorization: 'Bearer ' + token } });
+  if (!r.ok) {
+    localStorage.removeItem(TOKEN_KEY);
+    setAuthUI(null);
+    return;
+  }
+  const data = await r.json();
+  setAuthUI(data.user);
+}
+
+>>>>>>> 240dd9b (another some changes)
 async function loadProducts() {
   const err = document.getElementById('err-products');
   err.textContent = '';
@@ -63,11 +124,22 @@ async function loadProducts() {
   grid.onclick = async (e) => {
     const addBtn = e.target.closest('button.btn-cart');
     if (addBtn) {
+<<<<<<< HEAD
+=======
+      if (!getToken()) {
+        document.getElementById('err-products').textContent = 'Войдите, чтобы добавить в корзину';
+        return;
+      }
+>>>>>>> 240dd9b (another some changes)
       const productId = Number(addBtn.getAttribute('data-product-id'));
       document.getElementById('err-products').textContent = '';
       const r2 = await fetch(apiCart + '/add', {
         method: 'POST',
+<<<<<<< HEAD
         headers: { 'Content-Type': 'application/json' },
+=======
+        headers: authHeaders(),
+>>>>>>> 240dd9b (another some changes)
         body: JSON.stringify({ productId, qty: 1 }),
       });
       if (!r2.ok) {
@@ -81,8 +153,20 @@ async function loadProducts() {
     }
     const delBtn = e.target.closest('button.btn-del');
     if (!delBtn) return;
+<<<<<<< HEAD
     const id = delBtn.getAttribute('data-id');
     const r3 = await fetch(apiProducts + '/' + id, { method: 'DELETE' });
+=======
+    if (!getToken()) {
+      document.getElementById('err-products').textContent = 'Войдите, чтобы удалить товар';
+      return;
+    }
+    const id = delBtn.getAttribute('data-id');
+    const r3 = await fetch(apiProducts + '/' + id, {
+      method: 'DELETE',
+      headers: authHeaders(),
+    });
+>>>>>>> 240dd9b (another some changes)
     if (!r3.ok) {
       document.getElementById('err-products').textContent = await readError(r3);
       return;
@@ -92,14 +176,31 @@ async function loadProducts() {
   };
 }
 
+<<<<<<< HEAD
 document.getElementById('add-products').onclick = async () => {
+=======
+document.getElementById("checkout-btn")?.addEventListener("click", () => {
+  window.location.href = "/delivery";
+});
+
+
+document.getElementById('add-products').onclick = async () => {
+  if (!getToken()) {
+    document.getElementById('err-products').textContent = 'Войдите, чтобы добавить товар';
+    return;
+  }
+>>>>>>> 240dd9b (another some changes)
   const err = document.getElementById('err-products');
   err.textContent = '';
   const name = document.getElementById('name-products').value.trim();
   const price = document.getElementById('price-products').value;
   const r = await fetch(apiProducts, {
     method: 'POST',
+<<<<<<< HEAD
     headers: { 'Content-Type': 'application/json' },
+=======
+    headers: authHeaders(),
+>>>>>>> 240dd9b (another some changes)
     body: JSON.stringify({ name, price: Number(price) }),
   });
   if (!r.ok) {
@@ -150,7 +251,18 @@ async function loadCart() {
 }
 
 document.getElementById('clear-cart').onclick = async () => {
+<<<<<<< HEAD
   const r = await fetch(apiCart + '/clear', { method: 'DELETE' });
+=======
+  if (!getToken()) {
+    document.getElementById('err-cart').textContent = 'Войдите, чтобы очистить корзину';
+    return;
+  }
+  const r = await fetch(apiCart + '/clear', {
+    method: 'DELETE',
+    headers: authHeaders(),
+  });
+>>>>>>> 240dd9b (another some changes)
   if (!r.ok) {
     document.getElementById('err-cart').textContent = await readError(r);
     return;
@@ -158,5 +270,65 @@ document.getElementById('clear-cart').onclick = async () => {
   loadCart();
 };
 
+<<<<<<< HEAD
 loadProducts();
 loadCart();
+=======
+async function doLogin() {
+  const err = document.getElementById('auth-err');
+  err.textContent = '';
+  const username = document.getElementById('auth-username').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const r = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  });
+  if (!r.ok) {
+    err.textContent = await readError(r);
+    return;
+  }
+  const data = await r.json();
+  localStorage.setItem(TOKEN_KEY, data.token);
+  document.getElementById('auth-password').value = '';
+  setAuthUI(data.user);
+  loadProducts();
+  loadCart();
+}
+
+async function doRegister() {
+  const err = document.getElementById('auth-err');
+  err.textContent = '';
+  const username = document.getElementById('auth-username').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const r = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  });
+  if (!r.ok) {
+    err.textContent = await readError(r);
+    return;
+  }
+  const data = await r.json();
+  localStorage.setItem(TOKEN_KEY, data.token);
+  document.getElementById('auth-password').value = '';
+  setAuthUI(data.user);
+  loadProducts();
+  loadCart();
+}
+
+document.getElementById('btn-login').onclick = () => doLogin();
+document.getElementById('btn-register').onclick = () => doRegister();
+document.getElementById('btn-logout').onclick = () => {
+  localStorage.removeItem(TOKEN_KEY);
+  setAuthUI(null);
+  loadProducts();
+  loadCart();
+};
+
+refreshAuth().then(() => {
+  loadProducts();
+  loadCart();
+});
+>>>>>>> 240dd9b (another some changes)
